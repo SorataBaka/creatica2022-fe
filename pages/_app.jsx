@@ -45,4 +45,9 @@ function MyApp({ Component, pageProps }) {
 	);
 }
 
+MyApp.pageInformation = {
+	title: "Application",
+	description: "This is the application page",
+	url: "https://betterhelp.org/",
+};
 export default MyApp;
