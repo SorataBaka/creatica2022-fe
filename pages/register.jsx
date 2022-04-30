@@ -1,5 +1,6 @@
 import style from "../styles/Login.module.css";
-import axios from "axios";
+import registerStyle from "../styles/Register.module.css";
+import { FaChevronLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -39,20 +40,20 @@ function RegisterScreen() {
 			}
 		).catch();
 		const jsondata = await data.json();
-		if (!jsondata || jsondata.status !== 200) {
+		if (!jsondata || jsondata.status !== 201) {
 			return toast("Register failed. Perhaps your username has been taken?", {
 				type: "error",
 			});
 		}
-		localStorage.setItem("token", jsondata.token.access_token);
-		localStorage.setItem("expiry", jsondata.token.expire_at);
-		localStorage.setItem("refresh", jsondata.token.refresh_token);
 		toast("Register successful.", { type: "success" });
-		return router.push("/");
+		return router.push("/login");
 	};
 
 	return (
 		<>
+			<div className={registerStyle.backButton}>
+				<FaChevronLeft onClick={handleLogin} size={30} />
+			</div>
 			<div className={style.loginBox}>
 				<h2>Register</h2>
 				<form
@@ -62,7 +63,7 @@ function RegisterScreen() {
 					}}
 				>
 					<input
-						type="email"
+						type="text"
 						name="username"
 						placeholder="Email"
 						className={"form-control " + style.input}

@@ -62,7 +62,7 @@ function LoginScreen() {
 					}}
 				>
 					<input
-						type="email"
+						type="text"
 						name="username"
 						placeholder="Email"
 						className={"form-control " + style.input}
