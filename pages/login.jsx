@@ -1,5 +1,4 @@
 import style from "../styles/Login.module.css";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
