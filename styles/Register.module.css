@@ -1,0 +1,17 @@
+.backButton {
+	position: absolute;
+	left: 0;
+	top: 0;
+	min-width: 20px;
+	min-height: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}
+.backButton:hover {
+	cursor: pointer;
+	/* enlarge */
+	transform: scale(1.1);
+}

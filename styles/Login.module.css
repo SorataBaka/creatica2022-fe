@@ -1,0 +1,45 @@
+.loginBox {
+	min-width: 20%;
+	margin: 0 auto;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 10px;
+	box-shadow: -11px 14px 43px -10px rgba(0, 0, 0, 0.67);
+	-webkit-box-shadow: -11px 14px 43px -10px rgba(0, 0, 0, 0.67);
+	-moz-box-shadow: -11px 14px 43px -10px rgba(0, 0, 0, 0.67);
+}
+
+.form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.alert {
+	padding: 0;
+	margin: 0;
+}
+.input {
+	margin: 10px 0;
+}
+.submit {
+	margin: 10px 0 0 0;
+}
+.registerSpan {
+	margin: 10px 0 0 0;
+	padding: 0;
+	color: rgb(172, 172, 172);
+}
+
+.registerSpan span {
+	color: rgb(153, 153, 153);
+	font-weight: bold;
+}
+.registerSpan span:hover {
+	color: rgb(0, 0, 0);
+	cursor: pointer;
+}
