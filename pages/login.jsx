@@ -25,13 +25,30 @@ function LoginScreen() {
 	const login = async () => {
 		if (!passwordRegex.test(password))
 			return toast("Invalid password", { type: "error" });
-		const data = await axios.request({
-			url: "https://creatica2022-be-aotynourea-as.a.run.app/api/v1/login",
-			data: {
-				username: username,
-				password: password,
-			},
-		});
+		const data = await fetch(
+			"https://creatica2022-be-aotynourea-as.a.run.app/api/v1/auth/login",
+			{
+				method: "POST",
+				body: JSON.stringify({
+					username: username,
+					password: password,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		).catch();
+		const jsondata = await data.json();
+		if (!jsondata || jsondata.status !== 200) {
+			return toast("Login failed. Are you sure you are registered?", {
+				type: "error",
+			});
+		}
+		localStorage.setItem("token", jsondata.token.access_token);
+		localStorage.setItem("expiry", jsondata.token.expire_at);
+		localStorage.setItem("refresh", jsondata.token.refresh_token);
+		toast("Login successful.", { type: "success" });
+		return router.push("/");
 	};
 
 	return (
@@ -81,6 +98,7 @@ LoginScreen.pageInformation = {
 LoginScreen.pageBehaviour = {
 	noheader: true,
 	nofooter: true,
+	avoidtokencheck: true,
 };
 
 export default LoginScreen;
