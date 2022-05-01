@@ -17,9 +17,12 @@ function Home() {
 	};
 
 	const handlePostSubmit = async () => {
-		if (!more) return toast("No more posts to load", { type: "error" });
+		if (newPost === "") {
+			toast("Please enter a post", { type: "error" });
+			return;
+		}
 		setLoading(true);
-		if (!newPost) return toast("Please enter a post", { type: "error" });
+
 		const data = await fetch(
 			"https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post",
 			{
@@ -49,6 +52,7 @@ function Home() {
 	};
 
 	const fetchPostsPostLoad = async () => {
+		if (!more) return toast("No more posts to load", { type: "error" });
 		setLoading(true);
 		if (!localStorage.getItem("token")) router.push("/login");
 		const url = `https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post?limit=20&page=${page}&sort=created_at%20desc`;
@@ -64,7 +68,6 @@ function Home() {
 			router.push("/login");
 		});
 		const jsondata = await postdata.json();
-		console.log(JSON.stringify(jsondata));
 		if (!jsondata || jsondata.status !== 200) {
 			toast("Error fetching posts", { type: "error" });
 			return;
@@ -94,16 +97,14 @@ function Home() {
 			) : (
 				<>
 					<div className={style.newPostBox}>
+						<h1 className={style.pageDesc}>Home</h1>
 						<textarea
 							name="newPost"
 							className={"form-control " + style.inputBox}
-							placeholder="New Post"
+							placeholder="Write Something..."
 							onChange={handlePostChange}
 						></textarea>
-						<button
-							className={style.postButton + " btn btn-primary"}
-							onClick={handlePostSubmit}
-						>
+						<button className={style.postButton} onClick={handlePostSubmit}>
 							Post
 						</button>
 					</div>

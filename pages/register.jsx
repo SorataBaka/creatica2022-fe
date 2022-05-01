@@ -65,7 +65,7 @@ function RegisterScreen() {
 					<input
 						type="text"
 						name="username"
-						placeholder="Email"
+						placeholder="Username"
 						className={"form-control " + style.input}
 						onChange={handleUsername}
 						autoComplete="off"

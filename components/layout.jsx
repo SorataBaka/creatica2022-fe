@@ -4,7 +4,6 @@ import HeaderComponent from "./headercomponent";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
-
 import "bootstrap/dist/css/bootstrap.css";
 export default function Layout({ headdata, pagebehaviour, children }) {
 	return (
