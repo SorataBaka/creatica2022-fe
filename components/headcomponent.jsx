@@ -23,7 +23,7 @@ export default function HeadComponent({ headdata }) {
 				property="og:description"
 				content={`${headdata?.description} - Safe and secure forum for your inner fights and battles.`}
 			/>
-			<meta property="og:image" content="/api/assets/snapshot.png" />
+			<meta property="og:image" content="/meta.png" />
 
 			<meta name="theme-color" content="#000343" />
 			<meta property="twitter:card" content="summary_large_image" />
@@ -36,7 +36,7 @@ export default function HeadComponent({ headdata }) {
 				property="twitter:description"
 				content={`${headdata?.description} - Safe and secure forum for your inner fights and battles.`}
 			/>
-			<meta property="twitter:image" content="/api/assets/snapshot.png" />
+			<meta property="twitter:image" content="/meta.png" />
 		</Head>
 	);
 }
