@@ -105,6 +105,10 @@ function ProfileScreen() {
 		fetchPostsPostLoad(page);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [page]);
+	useEffect(() => {
+		if (data.length === 0) return;
+		setUsername(data[0].username);
+	}, [data]);
 
 	return (
 		<HomeLayoutComponent>
