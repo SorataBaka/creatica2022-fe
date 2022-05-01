@@ -31,7 +31,7 @@ function HomeLayoutComponent({ children }) {
 							handleSidebarClick("/");
 						}}
 					>
-						<FaHouseUser size={33} />
+						<FaHouseUser size={"33px"} />
 						<p className={style.sidebarButtonText}>Home</p>
 					</div>
 					<div
@@ -40,7 +40,7 @@ function HomeLayoutComponent({ children }) {
 							handleSidebarClick("/profile");
 						}}
 					>
-						<MdAccountCircle size={33} />
+						<MdAccountCircle size={"33px"} />
 						<p className={style.sidebarButtonText}>Profile</p>
 					</div>
 				</div>

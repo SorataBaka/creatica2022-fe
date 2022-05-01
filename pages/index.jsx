@@ -1,6 +1,6 @@
 import HomeLayoutComponent from "../components/homelayoutcomponent";
 import style from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 
@@ -9,8 +9,8 @@ function Home() {
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [newPost, setNewPost] = useState("");
-	const [more, setMore] = useState(true);
 	const router = useRouter();
+	let postnum = 1;
 
 	const handlePostChange = (e) => {
 		setNewPost(e.target.value);
@@ -51,12 +51,10 @@ function Home() {
 		router.reload();
 	};
 
-	const fetchPostsPostLoad = async () => {
-		if (!more) return toast("No more posts to load", { type: "error" });
-		setLoading(true);
-		if (!localStorage.getItem("token")) router.push("/login");
-		const url = `https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post?limit=20&page=${page}&sort=created_at%20desc`;
-		setPage(page + 1);
+	const fetchPostsPostLoad = async (currentpage) => {
+		if (!more) return false;
+		if (!localStorage.getItem("token")) return router.push("/login");
+		const url = `https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post?limit=20&page=${currentpage}&sort=created_at%20desc`;
 		const postdata = await fetch(url, {
 			method: "GET",
 			headers: {
@@ -72,30 +70,49 @@ function Home() {
 			toast("Error fetching posts", { type: "error" });
 			return;
 		}
-		const newdata = data;
-		for (const post of jsondata.posts) {
-			if (data.indexOf(post) !== -1) continue;
-			newdata.push(post);
+
+		if (jsondata.posts === null) {
+			setMore(false);
+			return;
 		}
-		setData(newdata);
-		setLoading(false);
+		//Filter jsondata.posts to remove posts that are duplicates
+		const filteredPosts = jsondata.posts.filter((post) => {
+			return !data.some((dataPost) => {
+				return dataPost.id === post.id;
+			});
+		});
+		setData([...data, ...filteredPosts]);
 	};
+	const [more, setMore] = useState(true);
+	const endOfPostRef = useRef();
+	const endOfPostCallback = useCallback(
+		(node) => {
+			if (loading) return;
+			if (endOfPostRef.current) endOfPostRef.current.disconnect();
+			endOfPostRef.current = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting && more) {
+					setPage((prev) => prev + 1);
+				}
+			});
+			if (node) endOfPostRef.current.observe(node);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[loading, more]
+	);
 
 	const handlePostDetail = (id) => {
 		router.push(`/post/${id}`);
 	};
 
 	useEffect(() => {
-		fetchPostsPostLoad();
+		fetchPostsPostLoad(page);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [page]);
 
 	return (
 		<HomeLayoutComponent>
-			{loading ? (
-				<h1 className={style.loading}>Loading...</h1>
-			) : (
-				<>
+			<>
+				{!loading && (
 					<div className={style.newPostBox}>
 						<h1 className={style.pageDesc}>Home</h1>
 						<textarea
@@ -108,8 +125,33 @@ function Home() {
 							Post
 						</button>
 					</div>
-					<div className={style.postList}>
-						{data.map((post) => {
+				)}
+				<div className={style.postList}>
+					{data.map((post, index) => {
+						if (index === data.length - 5) {
+							return (
+								<div
+									className={style.post}
+									key={post.id}
+									ref={endOfPostCallback}
+									onClick={(e) => {
+										e.preventDefault();
+										handlePostDetail(post.id);
+									}}
+								>
+									<h6>
+										{post.username}{" "}
+										{post.created_at !== post.updated_at ? (
+											<span>&#40;Edited&#41;</span>
+										) : (
+											""
+										)}
+									</h6>
+									<p>{post.body}</p>
+									<span>{new Date(post.created_at * 1000).toDateString()}</span>
+								</div>
+							);
+						} else {
 							return (
 								<div
 									className={style.post}
@@ -131,10 +173,10 @@ function Home() {
 									<span>{new Date(post.created_at * 1000).toDateString()}</span>
 								</div>
 							);
-						})}
-					</div>
-				</>
-			)}
+						}
+					})}
+				</div>
+			</>
 		</HomeLayoutComponent>
 	);
 }
