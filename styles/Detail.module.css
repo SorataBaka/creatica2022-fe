@@ -1,0 +1,50 @@
+.pageDesc {
+	color: #34ccfe;
+	font-family: "IBM Plex Sans";
+	font-size: 30px;
+}
+
+.topBar {
+	width: 100%;
+	margin-top: 20px1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	align-self: flex-start;
+}
+
+.backButton {
+	width: 20px;
+	height: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}
+.backButton:hover {
+	cursor: pointer;
+	/* enlarge */
+	transform: scale(1.1);
+}
+.contentBox {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.postDetailBox,
+.commentBox {
+	width: auto;
+	height: 20%;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
+}
+.commentBox {
+	height: 60%;
+	margin-top: 20px;
+}

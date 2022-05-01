@@ -16,9 +16,9 @@
 	width: 20%;
 	z-index: 2000;
 	padding: 20px;
-	box-shadow: 10px 1px 29px -19px rgba(0, 0, 0, 0.75);
-	-webkit-box-shadow: 10px 1px 29px -19px rgba(0, 0, 0, 0.75);
-	-moz-box-shadow: 10px 1px 29px -19px rgba(0, 0, 0, 0.75);
+	box-shadow: 19px 1px 23px -29px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: 19px 1px 23px -29px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 19px 1px 23px -29px rgba(0, 0, 0, 0.75);
 }
 .mainContent {
 	height: 100%;
@@ -37,7 +37,6 @@
 }
 .logo:hover {
 	cursor: pointer;
-
 }
 
 .buttonGroup {

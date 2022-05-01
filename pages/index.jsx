@@ -10,45 +10,10 @@ function Home() {
 	const [page, setPage] = useState(1);
 	const [newPost, setNewPost] = useState("");
 	const router = useRouter();
-	let postnum = 1;
+	const [more, setMore] = useState(true);
 
 	const handlePostChange = (e) => {
 		setNewPost(e.target.value);
-	};
-
-	const handlePostSubmit = async () => {
-		if (newPost === "") {
-			toast("Please enter a post", { type: "error" });
-			return;
-		}
-		setLoading(true);
-
-		const data = await fetch(
-			"https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post",
-			{
-				method: "POST",
-				body: JSON.stringify({
-					body: newPost,
-				}),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${localStorage.getItem("token")}`,
-				},
-			}
-		).catch();
-		const jsondata = await data.json();
-		if (!jsondata || jsondata.status !== 201) {
-			return toast("Post failed. Are you sure you are logged in?", {
-				type: "error",
-			});
-		}
-		toast("Post successful.", { type: "success" });
-		setNewPost("");
-		setPage(1);
-		setData([]);
-		setMore(jsondata.page_info.more);
-		// Refresh
-		router.reload();
 	};
 
 	const fetchPostsPostLoad = async (currentpage) => {
@@ -83,7 +48,35 @@ function Home() {
 		});
 		setData([...data, ...filteredPosts]);
 	};
-	const [more, setMore] = useState(true);
+	const handlePostSubmit = async () => {
+		if (newPost === "") {
+			toast("Please enter a post", { type: "error" });
+			return;
+		}
+
+		const data = await fetch(
+			"https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post",
+			{
+				method: "POST",
+				body: JSON.stringify({
+					body: newPost,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			}
+		).catch();
+		const jsondata = await data.json();
+		if (!jsondata || jsondata.status !== 201) {
+			return toast("Post failed. Are you sure you are logged in?", {
+				type: "error",
+			});
+		}
+		toast("Post successful.", { type: "success" });
+		// Refresh
+		router.reload();
+	};
 	const endOfPostRef = useRef();
 	const endOfPostCallback = useCallback(
 		(node) => {
@@ -141,10 +134,8 @@ function Home() {
 								>
 									<h6>
 										{post.username}{" "}
-										{post.created_at !== post.updated_at ? (
+										{post.created_at !== post.updated_at && (
 											<span>&#40;Edited&#41;</span>
-										) : (
-											""
 										)}
 									</h6>
 									<p>{post.body}</p>
@@ -163,14 +154,15 @@ function Home() {
 								>
 									<h6>
 										{post.username}{" "}
-										{post.created_at !== post.updated_at ? (
+										{post.created_at !== post.updated_at && (
 											<span>&#40;Edited&#41;</span>
-										) : (
-											""
 										)}
 									</h6>
 									<p>{post.body}</p>
-									<span>{new Date(post.created_at * 1000).toDateString()}</span>
+									<span>
+										Created: {new Date(post.created_at * 1000).toDateString()}{" "}
+										{post.comment_count}
+									</span>
 								</div>
 							);
 						}
