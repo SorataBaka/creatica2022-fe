@@ -3,7 +3,7 @@ import style from "../styles/Home.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-
+import { FaComment } from "react-icons/fa";
 function Home() {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
@@ -35,11 +35,12 @@ function Home() {
 			toast("Error fetching posts", { type: "error" });
 			return;
 		}
-
+		setMore(jsondata.page_info.more);
 		if (jsondata.posts === null) {
 			setMore(false);
 			return;
 		}
+
 		//Filter jsondata.posts to remove posts that are duplicates
 		const filteredPosts = jsondata.posts.filter((post) => {
 			return !data.some((dataPost) => {
@@ -105,69 +106,65 @@ function Home() {
 	return (
 		<HomeLayoutComponent>
 			<>
-				{!loading && (
-					<div className={style.newPostBox}>
-						<h1 className={style.pageDesc}>Home</h1>
-						<textarea
-							name="newPost"
-							className={"form-control " + style.inputBox}
-							placeholder="Write Something..."
-							onChange={handlePostChange}
-						></textarea>
-						<button className={style.postButton} onClick={handlePostSubmit}>
-							Post
-						</button>
-					</div>
+				{!loading ? (
+					<>
+						<div className={style.newPostBox}>
+							<h1 className={style.pageDesc}>Home</h1>
+							<textarea
+								name="newPost"
+								className={"form-control " + style.inputBox}
+								placeholder="Write Something..."
+								onChange={handlePostChange}
+							></textarea>
+							<button className={style.postButton} onClick={handlePostSubmit}>
+								Post
+							</button>
+						</div>
+						<div className={style.postList}>
+							{data.map((post, index) => {
+								if (index === data.length - 5) {
+								} else {
+									return (
+										<div
+											className={style.post}
+											key={post.id}
+											onClick={(e) => {
+												e.preventDefault();
+												handlePostDetail(post.id);
+											}}
+										>
+											<h6>
+												{post.username}{" "}
+												{post.created_at !== post.updated_at && (
+													<span>&#40;Edited&#41;</span>
+												)}
+											</h6>
+											<p>
+												{post.body.length >= 450
+													? post.body.split("").slice(0, 450).join("") + "..."
+													: post.body}
+											</p>
+											<div className={style.postFoot}>
+												<span>
+													Posted:{" "}
+													{new Date(post.created_at * 1000).toLocaleString(
+														"id-ID"
+													)}
+												</span>
+												<div className={style.comments}>
+													{<FaComment size={15} />}
+													{post.comment_count}
+												</div>
+											</div>
+										</div>
+									);
+								}
+							})}
+						</div>
+					</>
+				) : (
+					<h1>Loading...</h1>
 				)}
-				<div className={style.postList}>
-					{data.map((post, index) => {
-						if (index === data.length - 5) {
-							return (
-								<div
-									className={style.post}
-									key={post.id}
-									ref={endOfPostCallback}
-									onClick={(e) => {
-										e.preventDefault();
-										handlePostDetail(post.id);
-									}}
-								>
-									<h6>
-										{post.username}{" "}
-										{post.created_at !== post.updated_at && (
-											<span>&#40;Edited&#41;</span>
-										)}
-									</h6>
-									<p>{post.body}</p>
-									<span>{new Date(post.created_at * 1000).toDateString()}</span>
-								</div>
-							);
-						} else {
-							return (
-								<div
-									className={style.post}
-									key={post.id}
-									onClick={(e) => {
-										e.preventDefault();
-										handlePostDetail(post.id);
-									}}
-								>
-									<h6>
-										{post.username}{" "}
-										{post.created_at !== post.updated_at && (
-											<span>&#40;Edited&#41;</span>
-										)}
-									</h6>
-									<p>{post.body}</p>
-									<span>
-										Created: {new Date(post.created_at * 1000).toDateString()}{" "}
-										{post.comment_count}
-									</span>
-								</div>
-							);
-						}
-					})}
-				</div>
 			</>
 		</HomeLayoutComponent>
 	);

@@ -1,12 +1,16 @@
-.pageDesc {
-	color: #34ccfe;
-	font-family: "IBM Plex Sans";
-	font-size: 30px;
+.warning {
+	align-self: center;
+	justify-self: center;
 }
-
+.contentBox {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
 .topBar {
 	width: 100%;
-	margin-top: 20px1;
+	margin-top: 20px;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -27,24 +31,131 @@
 	/* enlarge */
 	transform: scale(1.1);
 }
-.contentBox {
+.pageDesc {
+	color: #34ccfe;
+	font-family: "IBM Plex Sans";
+	font-size: 30px;
+}
+
+.postDetailBox,
+.commentBox {
+	width: auto;
+	margin: 20px;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	display: flex;
+	flex-direction: column;
+}
+
+/* Chrome, Edge, and Safari */
+.postDetailBox p::-webkit-scrollbar {
+	width: 10px;
+}
+.postDetailBox p::-webkit-scrollbar-track {
+	background: white;
+}
+
+.postDetailBox p::-webkit-scrollbar-thumb {
+	background-color: #6e6e6e;
+	border-radius: 10px;
+}
+
+.postDetailBox p {
+	height: 100%;
+	width: 100%;
+	word-wrap: break-word;
+	overflow-y: scroll;
+}
+.postDetailBox span {
+	color: rgb(116, 116, 116);
+	font-size: 0.8rem;
+	align-self: flex-start;
+	justify-self: flex-end;
+}
+.postDetailBox {
+	height: 30%;
+}
+.commentBox {
+	height: 60%;
+	margin-top: 0px;
+}
+.commentBox h5 {
+	color: grey;
+}
+.commentInputBox {
+	width: 100%;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: #34ccfe;
+	box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+}
+.commentInputBox textarea {
+	width: 100%;
+	height: 60%;
+}
+.commentBoxFooter {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	margin-top: 20px;
+}
+.commentButton {
+	border-radius: 50px;
+	width: max-content;
+	margin-right: 0;
+}
+.commentList {
+	height: 55%;
+	overflow-y: scroll;
+	padding: 20px;
+	margin-top: 20px;
+	border-radius: 10px;
+	background-color: #34ccfe;
+	box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+}
+.commentList::-webkit-scrollbar {
+	width: 10px;
+}
+.commentList::-webkit-scrollbar-track {
+	background: #34ccfe;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.commentList::-webkit-scrollbar-thumb {
+	background-color: #6e6e6e;
+	border-radius: 10px;
+}
+
+.commentList {
+	scrollbar-width: auto;
+	scrollbar-color: #6e6e6e #ffffff;
+}
+
+.comment {
+	margin-left: 0px;
+	margin-right: 0px;
+	background-color: white;
+	margin-bottom: 20px;
+	box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-webkit-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: -10px 10px 17px -11px rgba(0, 0, 0, 0.75);
+}
+
+.noCommentDiv {
 	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-}
-.postDetailBox,
-.commentBox {
-	width: auto;
-	height: 20%;
-	margin: 20px;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
-	-webkit-box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
-	-moz-box-shadow: -2px 7px 19px -7px rgba(0, 0, 0, 0.75);
-}
-.commentBox {
-	height: 60%;
-	margin-top: 20px;
+	justify-content: center;
+	align-items: center;
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 function HomeLayoutComponent({ children }) {
 	const router = useRouter();
 	const handleSidebarClick = (path) => {
-		router.push(path);
+		window.location.replace(path);
 	};
 	const handleLogout = () => {
 		localStorage.removeItem("token");
