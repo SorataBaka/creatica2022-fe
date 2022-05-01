@@ -1,16 +1,18 @@
 import HomeLayoutComponent from "../components/homelayoutcomponent";
+import profilestyle from "../styles/Profile.module.css";
 import style from "../styles/Home.module.css";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { FaComment } from "react-icons/fa";
-function Home() {
+import { FaChevronLeft, FaComment } from "react-icons/fa";
+function ProfileScreen() {
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
 	const [page, setPage] = useState(1);
 	const [newPost, setNewPost] = useState("");
 	const router = useRouter();
 	const [more, setMore] = useState(true);
+	const [username, setUsername] = useState("");
 
 	const handlePostChange = (e) => {
 		setNewPost(e.target.value);
@@ -19,7 +21,7 @@ function Home() {
 	const fetchPostsPostLoad = async (currentpage) => {
 		if (!more) return false;
 		if (!localStorage.getItem("token")) return router.push("/login");
-		const url = `https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post?limit=20&page=${currentpage}&sort=created_at%20desc`;
+		const url = `https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post/me?limit=20&page=${currentpage}&sort=created_at%20desc`;
 		const postdata = await fetch(url, {
 			method: "GET",
 			headers: {
@@ -110,7 +112,19 @@ function Home() {
 				{!loading ? (
 					<>
 						<div className={style.newPostBox}>
-							<h1 className={style.pageDesc}>Home</h1>
+							<div className={profilestyle.topBar}>
+								<div
+									className={profilestyle.backButton}
+									onClick={() => {
+										router.push("/");
+									}}
+								>
+									<FaChevronLeft size={30} />
+								</div>
+								<h1 className={profilestyle.pageDesc}>
+									Welcome Back, <span>{username}</span>
+								</h1>
+							</div>
 							<textarea
 								name="newPost"
 								className={"form-control " + style.inputBox}
@@ -171,13 +185,14 @@ function Home() {
 		</HomeLayoutComponent>
 	);
 }
-Home.pageInformation = {
-	title: "Home",
-	description: "Homepage",
-	url: "https://betterhelp.org/login",
+ProfileScreen.pageInformation = {
+	title: "Profile",
+	description: "Your account profile",
+	url: "https://betterhelp.org/profile",
 };
-Home.pageBehaviour = {
+ProfileScreen.pageBehaviour = {
 	noheader: true,
 	nofooter: true,
 };
-export default Home;
+
+export default ProfileScreen;

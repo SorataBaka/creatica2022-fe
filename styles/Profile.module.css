@@ -1,0 +1,33 @@
+.topBar {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	align-self: flex-start;
+}
+
+.backButton {
+	width: 20px;
+	height: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}
+.backButton:hover {
+	cursor: pointer;
+	/* enlarge */
+	transform: scale(1.1);
+}
+.pageDesc {
+	margin: 0px;
+	color: #34ccfe;
+	font-family: "IBM Plex Sans";
+	font-size: 30px;
+}
+.pageDesc span {
+	color: black;
+	/* bold */
+	font-weight: bold;
+}

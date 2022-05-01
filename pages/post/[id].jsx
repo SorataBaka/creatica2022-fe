@@ -10,6 +10,7 @@ function PostDetail() {
 	const [data, setData] = useState(undefined);
 	const [newComment, setNewComment] = useState("");
 	const fetchPostDetail = async (postid) => {
+		if (!localStorage.getItem("token")) return router.push("/login");
 		const data = await fetch(
 			`https://creatica2022-be-aotynourea-as.a.run.app/api/v1/post/${postid}?sort=created_at%20desc`,
 			{
@@ -40,6 +41,7 @@ function PostDetail() {
 	}, [router.isReady]);
 
 	const handleCommentPost = async () => {
+		if (!localStorage.getItem("token")) return router.push("/login");
 		if (newComment === "") {
 			toast("Please enter a comment", { type: "error" });
 			return;
