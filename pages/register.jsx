@@ -25,7 +25,10 @@ function RegisterScreen() {
 
 	const register = async () => {
 		if (!passwordRegex.test(password))
-			return toast("Invalid password", { type: "error" });
+			return toast(
+				"Invalid password. Password must contain atleast 1 Uppercase, 1 Lowercase, and 1 Number.",
+				{ type: "error" }
+			);
 		const data = await fetch(
 			"https://creatica2022-be-aotynourea-as.a.run.app/api/v1/auth/register",
 			{
